@@ -2986,3 +2986,8 @@ impl RuleRunner for crate::rules::vue::valid_define_emits::ValidDefineEmits {
     const NODE_TYPES: &AstTypesBitset = &AstTypesBitset::new();
     const ANY_NODE_TYPE: bool = true;
 }
+
+impl RuleRunner for crate::rules::vue::valid_define_props::ValidDefineProps {
+    const NODE_TYPES: &AstTypesBitset = &AstTypesBitset::new();
+    const ANY_NODE_TYPE: bool = true;
+}
