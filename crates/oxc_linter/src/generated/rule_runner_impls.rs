@@ -2982,6 +2982,11 @@ impl RuleRunner for crate::rules::vitest::require_local_test_context_for_concurr
 
 }
 
+impl RuleRunner for crate::rules::vue::define_emits_declaration::DefineEmitsDeclaration {
+    const NODE_TYPES: &AstTypesBitset = &AstTypesBitset::new();
+    const ANY_NODE_TYPE: bool = true;
+}
+
 impl RuleRunner for crate::rules::vue::define_props_declaration::DefinePropsDeclaration {
     const NODE_TYPES: &AstTypesBitset = &AstTypesBitset::new();
     const ANY_NODE_TYPE: bool = true;
