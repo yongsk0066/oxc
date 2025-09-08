@@ -1,10 +1,12 @@
 use oxc_ast::ast::Expression;
+use oxc_span::GetSpan;
 
 use crate::{
     Format,
     formatter::{FormatResult, Formatter, prelude::*},
     generated::ast_nodes::{AstNode, AstNodes},
     parentheses::NeedsParentheses,
+    utils::typecast::format_type_cast_comment_node,
     write,
     write::FormatWrite,
 };
@@ -13,6 +15,17 @@ pub struct FormatExpressionWithoutTrailingComments<'a, 'b>(pub &'b AstNode<'a, E
 
 impl<'a> Format<'a> for FormatExpressionWithoutTrailingComments<'a, '_> {
     fn fmt(&self, f: &mut Formatter<'_, 'a>) -> FormatResult<()> {
+        if format_type_cast_comment_node(
+            self.0,
+            matches!(
+                self.0.as_ast_nodes(),
+                AstNodes::ObjectExpression(_) | AstNodes::ArrayExpression(_)
+            ),
+            f,
+        )? {
+            return Ok(());
+        }
+
         let needs_parentheses = self.0.needs_parentheses(f);
         let print_left_paren =
             |f: &mut Formatter<'_, 'a>| write!(f, needs_parentheses.then_some("("));
